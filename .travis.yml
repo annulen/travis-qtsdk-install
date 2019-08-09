@@ -1,12 +1,15 @@
-language : cpp
+language: cpp
 compiler: gcc
 sudo: required
+dist: bionic
+osx_image: xcode10.1
 
 addons:
   apt:
     packages:
       - p7zip-full
   homebrew:
+    update: true
     packages:
       - p7zip
 
@@ -16,7 +19,8 @@ env:
 matrix:
   include:
   - os: osx
-    osx_image: xcode10.1
+    before_install:
+      - brew update
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.clang_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
       - install-qtwebkit Qt/5.13.0
@@ -25,7 +29,6 @@ matrix:
       - find Qt -maxdepth 3
       - du -hs Qt
   - os: linux
-    dist: bionic
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.gcc_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
       - install-qtwebkit Qt/5.13.0

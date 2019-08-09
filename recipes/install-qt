@@ -26,7 +26,7 @@ echo Installing Qt
 if [ "$(uname)" = "Darwin" ]; then
   INSTALLER_NAME=${INSTALLER%.*}
   APPFILE=/Volumes/${INSTALLER_NAME}/${INSTALLER_NAME}.app/Contents/MacOS/${INSTALLER_NAME}
-  hdiutil attach ${PWD}/${INSTALLER}
+  hdiutil attach ${PWD}/${INSTALLER} -noverify # FIXME: Check hash sum of installer after download! Should be faster than this
   extract-qt-installer $APPFILE ${QT_TARGET_CATALOG}/Qt
   hdiutil detach /Volumes/${INSTALLER_NAME}
 elif [ "$(uname)" = "Linux" ]; then

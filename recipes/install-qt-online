@@ -9,7 +9,7 @@ function usage() {
     exit -1
 }
 
-if [ $# -lt 2 ]
+if [ $# -lt 1 ]
 then
 	usage
 fi
@@ -19,10 +19,10 @@ QT_TARGET_CATALOG=${2:-$PWD}
 QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
 
 if [ "$(uname)" = "Darwin" ]; then
-  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.0/qt-unified-mac-x64-3.0.6-online.dmg
+  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.1/qt-unified-mac-x64-3.1.1-online.dmg
   COMPILER=clang_64
 elif [ "$(uname)" = "Linux" ]; then
-  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.0/qt-unified-linux-x64-3.0.6-online.run
+  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.1/qt-unified-linux-x64-3.1.1-online.run
   COMPILER=gcc_64
 else
   echo "Unsupported system." >&2

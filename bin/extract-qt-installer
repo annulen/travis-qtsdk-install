@@ -44,7 +44,7 @@ fi
 
 export PATH=$PATH:$PWD
 export WORKDIR=$PWD
-INSTALLER=$1
+INSTALLER="$1 --no-force-installations"
 OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
 PACKAGES=$QT_CI_PACKAGES

@@ -7,10 +7,17 @@ addons:
   apt:
     packages:
       - p7zip-full
+      - ninja-build
+      - libhunspell-dev
+      - libgl1-mesa-dev
+      - libgstreamer-plugins-base1.0-0
+      - libpulse-mainloop-glib0
   homebrew:
     update: true
     packages:
       - p7zip
+      - ninja
+      - hunspell
 
 env:
     - PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH}
@@ -21,8 +28,8 @@ matrix:
     osx_image: xcode10.1
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.clang_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
-      - install-qtwebkit Qt/5.13.0
-    script:
+      - install-qtwebkit
+    before_script:
       - find Qt -name '*.dylib*' | sort
       - find Qt -name 'QtWeb*' | sort
       - find Qt -maxdepth 3 | sort
@@ -30,9 +37,15 @@ matrix:
   - os: linux
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.gcc_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
-      - install-qtwebkit Qt/5.13.0
-    script:
+      - install-qtwebkit
+    before_script:
       - find Qt -name '*.so*' | sort
       - find Qt -name 'QtWeb*' | sort
       - find Qt -maxdepth 3 | sort
       - du -hs Qt
+
+script:
+  - git clone --depth 1 https://github.com/OtterBrowser/otter-browser.git
+  - mkdir otter-browser-build
+  - cmake -Botter-browser-build -Hotter-browser -DQt5_DIR=$QTDIR/lib/cmake/Qt5 -G Ninja
+  - cmake --build otter-browser-build --config Release

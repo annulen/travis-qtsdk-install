@@ -14,7 +14,7 @@ then
 	usage
 fi
 
-export QT_CI_PACKAGES=${1}
+QT_VERSION=${1}
 QT_TARGET_CATALOG=${2:-$PWD}
 QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
 

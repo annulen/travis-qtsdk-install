@@ -1,7 +1,7 @@
 # QT-CI
 This project collects a set of script for building Qt application for Android/iOS in command line environment.
 
-[![Build Status](https://travis-ci.org/benlau/qtci.svg?branch=master)](https://travis-ci.org/benlau/qtci)
+[![Build Status](https://travis-ci.org/annulen/travis-qtsdk-install.svg?branch=experiment)](https://travis-ci.org/annulen/travis-qtsdk-install)
 
 Check [.travis.yml](https://github.com/benlau/qtci/blob/master/.travis.yml) to see how it works.
 It will demonstrate how to build an apk file using QT-CI scripts.

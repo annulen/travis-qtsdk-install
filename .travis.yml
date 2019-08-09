@@ -7,10 +7,6 @@ env:
 
 matrix:
   include:
-  - before_install:
-    script:
-      - which cmake
-      - cmake --version
   - os: osx
     osx_image: xcode10.1
     script: 

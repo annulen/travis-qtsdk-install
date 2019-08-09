@@ -2,6 +2,14 @@ language : cpp
 compiler: gcc
 sudo: required
 
+addons:
+  apt:
+    packages:
+      - p7zip-full
+  homebrew:
+    packages:
+      - p7zip
+
 env:
     - PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH}
 
@@ -9,10 +17,6 @@ matrix:
   include:
   - os: osx
     osx_image: xcode10.1
-    addons:
-      homebrew:
-        packages:
-          - p7zip
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.clang_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
       - install-qtwebkit Qt/5.13.0
@@ -22,10 +26,6 @@ matrix:
       - du -hs Qt
   - os: linux
     dist: bionic
-    addons:
-      apt:
-        packages:
-          - p7zip
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.gcc_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
       - install-qtwebkit Qt/5.13.0

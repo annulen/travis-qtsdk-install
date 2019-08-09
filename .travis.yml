@@ -9,9 +9,11 @@ matrix:
   include:
   - os: osx
     osx_image: xcode10.1
-    script: 
-      - QT_CI_PACKAGES=qt.qt5.5124.clang_64 install-qt 5.12.4 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
+    script:
+      - install-qt-online qt.qt5.5124.clang_64 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
+      - find Qt
   - os: linux
     dist: bionic
     script:
-      - QT_CI_PACKAGES=qt.qt5.5124.gcc_64 install-qt 5.12.4 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
+      - install-qt-online qt.qt5.5124.gcc_64 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
+      - find Qt

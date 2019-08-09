@@ -9,15 +9,24 @@ matrix:
   include:
   - os: osx
     osx_image: xcode10.1
-    script: 
+    before_install:
+      - /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      - brew install p7zip
+    install:
       - QT_CI_PACKAGES=qt.qt5.5130.clang_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
+      - install-qtwebkit Qt/5.13.0
+    script:
       - find Qt -name '*.framework'
       - find Qt -maxdepth 3
       - du -hs Qt
   - os: linux
     dist: bionic
-    script:
+    before_install:
+      - sudo apt-get install p7zip
+    install:
       - QT_CI_PACKAGES=qt.qt5.5130.gcc_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
+      - install-qtwebkit
+    script:
       - find Qt -name '*.so.5.13.0'
       - find Qt -maxdepth 3
       - du -hs Qt

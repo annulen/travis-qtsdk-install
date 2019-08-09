@@ -9,7 +9,7 @@ function usage() {
     exit -1
 }
 
-if [ $# -lt 2 ]
+if [ $# -lt 1 ]
 then
 	usage
 fi
@@ -18,11 +18,12 @@ export QT_CI_PACKAGES=${1}
 QT_TARGET_CATALOG=${2:-$PWD}
 QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
 
+# N.B. Using "latest" unversioned link leads to incorrect value of INSTALLER_NAME on macOS
 if [ "$(uname)" = "Darwin" ]; then
-  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.0/qt-unified-mac-x64-3.0.6-online.dmg
+  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.1/qt-unified-mac-x64-3.1.1-online.dmg
   COMPILER=clang_64
 elif [ "$(uname)" = "Linux" ]; then
-  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.0/qt-unified-linux-x64-3.0.6-online.run
+  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.1/qt-unified-linux-x64-3.1.1-online.run
   COMPILER=gcc_64
 else
   echo "Unsupported system." >&2
@@ -47,3 +48,12 @@ elif [ "$(uname)" = "Linux" ]; then
   extract-qt-installer ${PWD}/${INSTALLER} ${QT_TARGET_CATALOG}/Qt
 fi
 
+echo Create ${ENVFILE}
+if [ -d "${QT_TARGET_CATALOG}/Qt/${QT_VERSION}/${COMPILER}/bin" ]; then
+  echo "export QTDIR=${QT_TARGET_CATALOG}/Qt/${QT_VERSION}/${COMPILER}" > ${ENVFILE}
+  echo "export PATH=${QT_TARGET_CATALOG}/Qt/${QT_VERSION}/${COMPILER}/bin:$PATH" >> ${ENVFILE}
+elif [ -d "${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${COMPILER}/bin" ]; then
+  # some packages use an abbreviated version x.y in the path instead of x.y.z
+  echo "export QTDIR=${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${COMPILER}" > ${ENVFILE}
+  echo "export PATH=${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${COMPILER}/bin:$PATH" >> ${ENVFILE}
+fi

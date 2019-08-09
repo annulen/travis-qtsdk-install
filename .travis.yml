@@ -1,6 +1,6 @@
 language : cpp
 compiler: gcc
-sudo: false
+sudo: required
 
 env:
     - PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH}

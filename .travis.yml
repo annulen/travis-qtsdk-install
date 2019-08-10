@@ -34,6 +34,15 @@ matrix:
       - find Qt -name 'QtWeb*' | sort
       - find Qt -maxdepth 3 | sort
       - du -hs Qt
+  - os: windows
+    install:
+      - QT_CI_PACKAGES=qt.qt5.5130.win64_msvc2017_64 install-qt-online 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"
+      - install-qtwebkit
+    before_script:
+      - find Qt -name '*.dll*' | sort
+      - find Qt -name 'QtWeb*' | sort
+      - find Qt -maxdepth 3 | sort
+      - du -hs Qt
   - os: linux
     install:
       - QT_CI_PACKAGES=qt.qt5.5130.gcc_64 install-qt 5.13.0 && source qt-5.13.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.13.0"

@@ -285,6 +285,11 @@ Controller.prototype.LicenseAgreementPageCallback = function() {
     gui.clickButton(buttons.NextButton);
 }
 
+Controller.prototype.StartMenuDirectoryPageCallback = function() {
+    log("Start Menu shortcuts");
+    gui.clickButton(buttons.NextButton);
+}
+
 Controller.prototype.ReadyForInstallationPageCallback = function() {
     log("Ready to install");
 

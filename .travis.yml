@@ -2,6 +2,8 @@ language: cpp
 compiler: gcc
 sudo: required
 dist: bionic
+git:
+  depth: 3
 
 addons:
   apt:
@@ -19,8 +21,7 @@ addons:
       - ninja
       - hunspell
 
-env:
-    - PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH}
+env: PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH}
 
 matrix:
   include:

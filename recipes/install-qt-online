@@ -26,7 +26,7 @@ if [ "$UNAME" = "Darwin" ]; then
 elif [ "$UNAME" = "Linux" ]; then
   DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.1/qt-unified-linux-x64-3.1.1-online.run
   COMPILER=gcc_64
-elif [ "${UNAME:0:4}" = "MSYS" ]; then
+elif [ "${UNAME:0:4}" = "MSYS" -o "${UNAME:0:5}" = "MINGW" ]; then
   DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.1/qt-unified-windows-x86-3.1.1-online.exe
   COMPILER=msvc2017_64
 else

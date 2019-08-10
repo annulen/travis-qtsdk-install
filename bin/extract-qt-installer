@@ -74,6 +74,12 @@ else
     
 fi
 
+UNAME=$(uname)
+if [ "${UNAME:0:4}" = "MSYS" -o "${UNAME:0:5}" = "MINGW" ]; then
+    OUTPUT="$(cygpath -w $OUTPUT)"
+    OUTPUT=${OUTPUT//\\/\\\\/}
+fi
+
 cat <<EOF > $SCRIPT
 
 function abortInstaller()
@@ -318,6 +324,11 @@ Controller.prototype.FinishedPageCallback = function() {
 }
 
 EOF
+
+if [ "${UNAME:0:4}" = "MSYS" -o "${UNAME:0:5}" = "MINGW" ]; then
+   $INSTALLER -v --script $SCRIPT | grep "\(QTCI\|operation\)"
+   exit 0
+fi
 
 chmod u+x $1
 if [ -n "$QT_CI_DEBUG" ] 
